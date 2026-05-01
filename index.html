@@ -43,7 +43,7 @@ height: 100vh;
 /* Header */
 .header {
 padding: 14px 16px 10px;
-padding-top: max(14px, env(safe-area-inset-top));
+padding-top: max(4px, calc(env(safe-area-inset-top) - 10px));
 display: flex;
 align-items: center;
 justify-content: space-between;
@@ -54,12 +54,15 @@ flex-shrink: 0;
 .nav-btn {
 background: none;
 border: 0.5px solid var(–border);
-color: var(–text-muted);
+color: var(–text-muted) !important;
+-webkit-text-fill-color: var(–text-muted);
 width: 32px; height: 32px;
 border-radius: 8px;
 cursor: pointer;
 font-size: 16px;
 display: flex; align-items: center; justify-content: center;
+-webkit-appearance: none;
+appearance: none;
 }
 .nav-btn:active { background: var(–surface2); }
 .header-date { text-align: center; }
@@ -68,11 +71,14 @@ display: flex; align-items: center; justify-content: center;
 .today-btn {
 background: none;
 border: 0.5px solid var(–border);
-color: var(–text-muted);
+color: var(–text-muted) !important;
+-webkit-text-fill-color: var(–text-muted);
 padding: 6px 12px;
 border-radius: 8px;
 cursor: pointer;
 font-size: 12px;
+-webkit-appearance: none;
+appearance: none;
 }
 .today-btn:active { background: var(–surface2); }
 
@@ -222,10 +228,13 @@ background: none;
 border: 0.5px dashed var(–border);
 border-radius: 8px;
 padding: 8px 4px;
-color: var(–text-muted);
+color: var(–text-muted) !important;
+-webkit-text-fill-color: var(–text-muted);
 cursor: pointer;
 font-size: 18px;
 flex-shrink: 0;
+-webkit-appearance: none;
+appearance: none;
 }
 .add-block-btn:active { background: var(–surface2); }
 
@@ -280,12 +289,15 @@ padding: 10px;
 border-radius: 8px;
 border: 0.5px solid var(–border);
 background: none;
-color: var(–text);
+color: var(–text) !important;
+-webkit-text-fill-color: var(–text);
 font-size: 14px;
 cursor: pointer;
 font-family: inherit;
+-webkit-appearance: none;
+appearance: none;
 }
-.modal-btn.primary { background: var(–accent-dim); border-color: var(–accent); color: var(–accent); }
+.modal-btn.primary { background: var(–accent-dim) !important; border-color: var(–accent) !important; color: var(–accent) !important; -webkit-text-fill-color: var(–accent); }
 
 /* Drag ghost */
 .drag-ghost {
