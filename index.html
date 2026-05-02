@@ -666,23 +666,24 @@ function setupBlockDrag(el, pb, dayIdx) {
   el.addEventListener('touchstart', e => {
     if (e.target.classList.contains('resize-handle') || e.target.classList.contains('delete-btn')) return;
     e.stopPropagation();
+    e.preventDefault();
     dragging = true;
     startY = e.touches[0].clientY;
     el.style.zIndex = 50;
     el.style.opacity = '0.85';
-    const move = ev => { onMove(ev.touches[0].clientY); };
+    const move = ev => { ev.preventDefault(); onMove(ev.touches[0].clientY); };
     const end = () => {
       dragging = false;
       el.style.zIndex = 5;
       el.style.opacity = '1';
       saveData();
-      renderPlacedBlocks();
+      renderDayBlocks(dayIdx);
       document.removeEventListener('touchmove', move);
       document.removeEventListener('touchend', end);
     };
-    document.addEventListener('touchmove', move, { passive: true });
+    document.addEventListener('touchmove', move, { passive: false });
     document.addEventListener('touchend', end);
-  }, { passive: true });
+  }, { passive: false });
 
   el.addEventListener('mousedown', e => {
     if (e.target.classList.contains('resize-handle') || e.target.classList.contains('delete-btn')) return;
@@ -706,10 +707,11 @@ function setupBlockDrag(el, pb, dayIdx) {
 }
 
 // Resize handle
-function setupResizeDrag(handle, pb) {
+function setupResizeDrag(handle, pb, dayIdx) {
   const onMove = (clientY) => {
-    const tlRect = document.getElementById('timeline').getBoundingClientRect();
-    const relY = clientY - tlRect.top;
+    const tlRect = document.getElementById('timeline-' + dayIdx).getBoundingClientRect();
+    const wrap = document.getElementById('timeline-wrap-' + dayIdx);
+    const relY = clientY - tlRect.top + wrap.scrollTop;
     const endSlot = yToSlot(relY);
     const newDur = Math.max(1, Math.min(TOTAL_SLOTS - pb.slot, endSlot - pb.slot));
     pb.duration = newDur;
@@ -720,16 +722,17 @@ function setupResizeDrag(handle, pb) {
 
   handle.addEventListener('touchstart', e => {
     e.stopPropagation();
-    const move = ev => { onMove(ev.touches[0].clientY); };
+    e.preventDefault();
+    const move = ev => { ev.preventDefault(); onMove(ev.touches[0].clientY); };
     const end = () => {
       saveData();
       renderDayBlocks(dayIdx);
       document.removeEventListener('touchmove', move);
       document.removeEventListener('touchend', end);
     };
-    document.addEventListener('touchmove', move, { passive: true });
+    document.addEventListener('touchmove', move, { passive: false });
     document.addEventListener('touchend', end);
-  }, { passive: true });
+  }, { passive: false });
 
   handle.addEventListener('mousedown', e => {
     e.stopPropagation(); e.preventDefault();
