@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -11,313 +10,325 @@
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 :root {
-color-scheme: light;
-–bg: #f0ebe3;
-–surface: #faf7f2;
-–surface2: #ede8e0;
-–border: rgba(180,140,100,0.2);
-–text: #3a2e24;
-–text-muted: rgba(100,75,50,0.5);
-–accent: #c4693a;
-–accent-dim: rgba(196,105,58,0.12);
-–hour-height: 60px;
-–slot-height: 30px;
+  color-scheme: light;
+  --bg: #f0ebe3;
+  --surface: #faf7f2;
+  --surface2: #ede8e0;
+  --border: rgba(180,140,100,0.2);
+  --text: #3a2e24;
+  --text-muted: rgba(100,75,50,0.5);
+  --accent: #c4693a;
+  --accent-dim: rgba(196,105,58,0.12);
+  --hour-height: 60px;
+  --slot-height: 30px;
 }
 
 html, body { color-scheme: light; background-color: #f0ebe3; }
 
 body {
-background: var(–bg);
-color: var(–text);
-font-family: ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
-min-height: 100vh;
-display: flex;
-flex-direction: column;
-overflow: hidden;
-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100vh;
 }
 
 /* Header */
 .header {
-padding: 10px 16px 10px;
-padding-top: max(44px, env(safe-area-inset-top, 14px));
-display: flex;
-align-items: center;
-justify-content: space-between;
-border-bottom: 0.5px solid rgba(180,140,100,0.2);
-flex-shrink: 0;
+  padding: 10px 16px 10px;
+  padding-top: max(44px, env(safe-area-inset-top, 14px));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.5px solid rgba(180,140,100,0.2);
+  flex-shrink: 0;
 }
 .header-nav { display: flex; align-items: center; gap: 12px; }
 .nav-btn {
-background: none;
-border: 0.5px solid rgba(180,140,100,0.3);
-color: rgba(100,75,50,0.5) !important;
--webkit-text-fill-color: rgba(100,75,50,0.5);
-width: 32px; height: 32px;
-border-radius: 8px;
-cursor: pointer;
-font-size: 16px;
-display: flex; align-items: center; justify-content: center;
--webkit-appearance: none;
-appearance: none;
+  background: none;
+  border: 0.5px solid rgba(180,140,100,0.3);
+  color: rgba(100,75,50,0.5) !important;
+  -webkit-text-fill-color: rgba(100,75,50,0.5);
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-appearance: none;
+  appearance: none;
 }
-.nav-btn:active { background: var(–surface2); }
+.nav-btn:active { background: var(--surface2); }
 .header-date { text-align: center; }
 .header-date .day-name { font-size: 11px; color: rgba(100,75,50,0.55); letter-spacing: 0.08em; text-transform: uppercase; }
 .header-date .date-num { font-size: 22px; font-weight: 300; color: #3a2e24; line-height: 1.2; }
 .today-btn {
-background: none;
-border: 0.5px solid rgba(180,140,100,0.3);
-color: rgba(100,75,50,0.6) !important;
--webkit-text-fill-color: rgba(100,75,50,0.6);
-padding: 6px 12px;
-border-radius: 8px;
-cursor: pointer;
-font-size: 12px;
--webkit-appearance: none;
-appearance: none;
+  background: none;
+  border: 0.5px solid rgba(180,140,100,0.3);
+  color: rgba(100,75,50,0.6) !important;
+  -webkit-text-fill-color: rgba(100,75,50,0.6);
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  -webkit-appearance: none;
+  appearance: none;
 }
-.today-btn:active { background: var(–surface2); }
+.today-btn:active { background: var(--surface2); }
 
 /* Main layout */
 .main {
-display: flex;
-flex: 1;
-overflow: hidden;
-position: relative;
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
 }
+
+/* Days carousel */
+.days-carousel {
+  flex: 1;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.days-carousel::-webkit-scrollbar { display: none; }
 
 /* Timeline */
 .timeline-wrap {
-flex: 1;
-overflow-y: auto;
-overflow-x: hidden;
-position: relative;
--webkit-overflow-scrolling: touch;
-padding-top: env(safe-area-inset-top, 0px);
+  flex-shrink: 0;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-align: start;
 }
 .timeline-wrap::-webkit-scrollbar { display: none; }
 
 .timeline {
-position: relative;
-margin-left: 44px;
-margin-right: 8px;
-padding-bottom: 20px;
+  position: relative;
+  margin-left: 44px;
+  margin-right: 8px;
+  padding-bottom: 20px;
 }
 
 .hour-row {
-position: relative;
-height: var(–hour-height);
-border-top: 0.5px solid rgba(180,140,100,0.2);
+  position: relative;
+  height: var(--hour-height);
+  border-top: 0.5px solid rgba(180,140,100,0.2);
 }
 .hour-label {
-position: absolute;
-left: -40px;
-top: -9px;
-font-size: 11px;
-color: rgba(100,75,50,0.45);
-width: 36px;
-text-align: right;
+  position: absolute;
+  left: -40px;
+  top: -9px;
+  font-size: 11px;
+  color: rgba(100,75,50,0.45);
+  width: 36px;
+  text-align: right;
 }
 .half-line {
-position: absolute;
-top: 50%;
-left: 0; right: 0;
-border-top: 0.5px dashed rgba(180,140,100,0.12);
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  border-top: 0.5px dashed rgba(180,140,100,0.12);
 }
 
 /* Blocks on timeline */
 .placed-block {
-position: absolute;
-left: 2px;
-right: 2px;
-background: #faf7f2;
-border: 1px solid rgba(196,105,58,0.3);
-border-left: 3px solid #c4693a;
-border-radius: 8px;
-padding: 6px 8px;
-cursor: grab;
-user-select: none;
-touch-action: none;
-z-index: 5;
-overflow: hidden;
-box-shadow: 0 1px 4px rgba(180,120,60,0.1);
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  background: #faf7f2;
+  border: 1px solid rgba(196,105,58,0.3);
+  border-left: 3px solid #c4693a;
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  z-index: 5;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(180,120,60,0.1);
 }
 .placed-block:active { cursor: grabbing; }
 .placed-block .block-title { font-size: 13px; color: #c4693a; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .placed-block .block-time { font-size: 11px; color: rgba(100,75,50,0.5); margin-top: 2px; }
 .placed-block .resize-handle {
-position: absolute;
-bottom: 0; left: 0; right: 0;
-height: 12px;
-cursor: ns-resize;
-display: flex; align-items: center; justify-content: center;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 12px;
+  cursor: ns-resize;
+  display: flex; align-items: center; justify-content: center;
 }
 .placed-block .resize-handle::after {
-content: ‘’;
-width: 24px; height: 2px;
-background: rgba(196,105,58,0.3);
-border-radius: 2px;
+  content: '';
+  width: 24px; height: 2px;
+  background: rgba(196,105,58,0.3);
+  border-radius: 2px;
 }
 .placed-block .delete-btn {
-position: absolute;
-top: 4px; right: 4px;
-width: 18px; height: 18px;
-background: rgba(196,105,58,0.1);
-border: none;
-border-radius: 4px;
-color: rgba(100,75,50,0.5);
-font-size: 11px;
-cursor: pointer;
-display: flex; align-items: center; justify-content: center;
-opacity: 0;
-transition: opacity 0.2s;
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 18px; height: 18px;
+  background: rgba(196,105,58,0.1);
+  border: none;
+  border-radius: 4px;
+  color: rgba(100,75,50,0.5);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 .placed-block:hover .delete-btn { opacity: 1; }
 
 /* Free time indicators */
 .free-indicator {
-position: absolute;
-left: 2px; right: 2px;
-background: rgba(196,105,58,0.04);
-border: 0.5px dashed rgba(196,105,58,0.2);
-border-radius: 6px;
-display: flex;
-align-items: center;
-justify-content: center;
-pointer-events: none;
-z-index: 2;
+  position: absolute;
+  left: 2px; right: 2px;
+  background: rgba(196,105,58,0.04);
+  border: 0.5px dashed rgba(196,105,58,0.2);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
 }
 .free-indicator span {
-font-size: 10px;
-color: rgba(196,105,58,0.55);
-letter-spacing: 0.05em;
+  font-size: 10px;
+  color: rgba(196,105,58,0.55);
+  letter-spacing: 0.05em;
 }
 
 /* Sidebar - block library */
 .sidebar {
-width: 72px;
-flex-shrink: 0;
-border-left: 0.5px solid rgba(180,140,100,0.2);
-display: flex;
-flex-direction: column;
-overflow-y: auto;
-overflow-x: hidden;
-padding: 8px 4px;
-gap: 6px;
--webkit-overflow-scrolling: touch;
+  width: 72px;
+  flex-shrink: 0;
+  border-left: 0.5px solid rgba(180,140,100,0.2);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 4px;
+  gap: 6px;
+  -webkit-overflow-scrolling: touch;
 }
 .sidebar::-webkit-scrollbar { display: none; }
 
 .lib-block {
-background: #faf7f2;
-border: 1px solid rgba(196,105,58,0.25);
-border-radius: 8px;
-padding: 8px 4px;
-text-align: center;
-cursor: grab;
-user-select: none;
-touch-action: none;
-flex-shrink: 0;
-box-shadow: 0 1px 3px rgba(180,120,60,0.08);
+  background: #faf7f2;
+  border: 1px solid rgba(196,105,58,0.25);
+  border-radius: 8px;
+  padding: 8px 4px;
+  text-align: center;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(180,120,60,0.08);
 }
 .lib-block:active { cursor: grabbing; opacity: 0.7; }
 .lib-block .lib-icon { font-size: 18px; }
 .lib-block .lib-name { font-size: 11px; color: rgba(100,75,50,0.6); margin-top: 3px; line-height: 1.2; }
 
 .add-block-btn {
-background: none;
-border: 1px dashed rgba(196,105,58,0.35);
-border-radius: 8px;
-padding: 8px 4px;
-color: rgba(196,105,58,0.7) !important;
--webkit-text-fill-color: rgba(196,105,58,0.7);
-cursor: pointer;
-font-size: 18px;
-flex-shrink: 0;
--webkit-appearance: none;
-appearance: none;
+  background: none;
+  border: 1px dashed rgba(196,105,58,0.35);
+  border-radius: 8px;
+  padding: 8px 4px;
+  color: rgba(196,105,58,0.7) !important;
+  -webkit-text-fill-color: rgba(196,105,58,0.7);
+  cursor: pointer;
+  font-size: 18px;
+  flex-shrink: 0;
+  -webkit-appearance: none;
+  appearance: none;
 }
-.add-block-btn:active { background: var(–surface2); }
+.add-block-btn:active { background: var(--surface2); }
 
 /* Add block modal */
 .modal-bg {
-display: none;
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,0.7);
-z-index: 100;
-align-items: flex-end;
-justify-content: center;
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 100;
+  align-items: flex-end;
+  justify-content: center;
 }
 .modal-bg.open { display: flex; }
 .modal {
-background: #faf7f2;
-border: 0.5px solid rgba(180,140,100,0.2);
-border-radius: 16px 16px 0 0;
-padding: 20px 16px 32px;
-width: 100%;
-max-width: 480px;
+  background: #faf7f2;
+  border: 0.5px solid rgba(180,140,100,0.2);
+  border-radius: 16px 16px 0 0;
+  padding: 20px 16px 32px;
+  width: 100%;
+  max-width: 480px;
 }
 .modal h3 { font-size: 15px; font-weight: 500; margin-bottom: 14px; color: #3a2e24; }
-.modal input[type=“text”] {
-width: 100%;
-background: #ede8e0;
-border: 0.5px solid rgba(180,140,100,0.25);
-color: #3a2e24;
-border-radius: 8px;
-padding: 10px 12px;
-font-size: 14px;
-margin-bottom: 8px;
-outline: none;
-font-family: inherit;
+.modal input[type="text"] {
+  width: 100%;
+  background: #ede8e0;
+  border: 0.5px solid rgba(180,140,100,0.25);
+  color: #3a2e24;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  margin-bottom: 8px;
+  outline: none;
+  font-family: inherit;
 }
 .modal input::placeholder { color: rgba(100,75,50,0.4); }
 .emoji-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
 .emoji-opt {
-width: 36px; height: 36px;
-border-radius: 8px;
-border: 0.5px solid var(–border);
-background: var(–surface2);
-font-size: 18px;
-cursor: pointer;
-display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: var(--surface2);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
 }
-.emoji-opt.selected { border-color: var(–accent); background: var(–accent-dim); }
+.emoji-opt.selected { border-color: var(--accent); background: var(--accent-dim); }
 .modal-actions { display: flex; gap: 8px; }
 .modal-btn {
-flex: 1;
-padding: 10px;
-border-radius: 8px;
-border: 0.5px solid rgba(180,140,100,0.3);
-background: none;
-color: #3a2e24 !important;
--webkit-text-fill-color: #3a2e24;
-font-size: 14px;
-cursor: pointer;
-font-family: inherit;
--webkit-appearance: none;
-appearance: none;
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 0.5px solid rgba(180,140,100,0.3);
+  background: none;
+  color: #3a2e24 !important;
+  -webkit-text-fill-color: #3a2e24;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
 }
 .modal-btn.primary { background: #c4693a !important; border-color: #c4693a !important; color: #fff !important; -webkit-text-fill-color: #fff; }
 
 /* Drag ghost */
 .drag-ghost {
-position: fixed;
-pointer-events: none;
-z-index: 999;
-background: #faf7f2;
-border: 1px solid #c4693a;
-border-radius: 8px;
-padding: 6px 8px;
-opacity: 0.9;
-display: none;
-min-width: 60px;
-box-shadow: 0 4px 12px rgba(180,120,60,0.2);
+  position: fixed;
+  pointer-events: none;
+  z-index: 999;
+  background: #faf7f2;
+  border: 1px solid #c4693a;
+  border-radius: 8px;
+  padding: 6px 8px;
+  opacity: 0.9;
+  display: none;
+  min-width: 60px;
+  box-shadow: 0 4px 12px rgba(180,120,60,0.2);
 }
 .drag-ghost .ghost-title { font-size: 13px; color: #c4693a; }
 </style>
-
 </head>
 <body>
 
@@ -336,8 +347,8 @@ box-shadow: 0 4px 12px rgba(180,120,60,0.2);
 </div>
 
 <div class="main">
-  <div class="timeline-wrap" id="timeline-wrap">
-    <div class="timeline" id="timeline"></div>
+  <div class="days-carousel" id="days-carousel">
+    <!-- 7 day columns will be inserted here by JS -->
   </div>
   <div class="sidebar" id="sidebar"></div>
 </div>
@@ -357,7 +368,6 @@ box-shadow: 0 4px 12px rgba(180,120,60,0.2);
 </div>
 
 <!-- Edit block modal -->
-
 <div class="modal-bg" id="edit-modal-bg">
   <div class="modal">
     <h3 id="edit-modal-title">編輯積木</h3>
@@ -374,7 +384,6 @@ box-shadow: 0 4px 12px rgba(180,120,60,0.2);
 </div>
 
 <!-- Rename placed block modal -->
-
 <div class="modal-bg" id="rename-modal-bg">
   <div class="modal">
     <h3>自訂行程名稱</h3>
@@ -447,31 +456,100 @@ function updateHeader() {
   document.getElementById('date-num').textContent = (currentDate.getMonth()+1) + '/' + currentDate.getDate();
 }
 
-// Build timeline
+// Build carousel with 7 days
 function buildTimeline() {
-  const tl = document.getElementById('timeline');
-  tl.innerHTML = '';
-  tl.style.height = (TOTAL_SLOTS * SLOT_H) + 'px';
-  tl.style.position = 'relative';
+  const carousel = document.getElementById('days-carousel');
+  carousel.innerHTML = '';
 
-  for (let h = START_HOUR; h < END_HOUR; h++) {
-    const row = document.createElement('div');
-    row.className = 'hour-row';
-    row.style.top = ((h - START_HOUR) * 2 * SLOT_H) + 'px';
-    row.style.position = 'absolute';
-    row.style.left = '0'; row.style.right = '0';
-    row.style.height = SLOT_H * 2 + 'px';
-    const label = document.createElement('div');
-    label.className = 'hour-label';
-    label.textContent = h + ':00';
-    const half = document.createElement('div');
-    half.className = 'half-line';
-    row.appendChild(label);
-    row.appendChild(half);
-    tl.appendChild(row);
+  for (let d = 0; d < 7; d++) {
+    const wrap = document.createElement('div');
+    wrap.className = 'timeline-wrap';
+    wrap.id = 'timeline-wrap-' + d;
+
+    const tl = document.createElement('div');
+    tl.className = 'timeline';
+    tl.id = 'timeline-' + d;
+    tl.style.height = (TOTAL_SLOTS * SLOT_H) + 'px';
+    tl.style.position = 'relative';
+    tl.style.marginLeft = '44px';
+    tl.style.marginRight = '8px';
+    tl.style.paddingBottom = '20px';
+
+    for (let h = START_HOUR; h < END_HOUR; h++) {
+      const row = document.createElement('div');
+      row.className = 'hour-row';
+      row.style.top = ((h - START_HOUR) * 2 * SLOT_H) + 'px';
+      row.style.position = 'absolute';
+      row.style.left = '0'; row.style.right = '0';
+      row.style.height = SLOT_H * 2 + 'px';
+      const label = document.createElement('div');
+      label.className = 'hour-label';
+      label.textContent = h + ':00';
+      const half = document.createElement('div');
+      half.className = 'half-line';
+      row.appendChild(label);
+      row.appendChild(half);
+      tl.appendChild(row);
+    }
+    wrap.appendChild(tl);
+    carousel.appendChild(wrap);
+
+    // Setup drop zone for this day
+    setupDayDropZone(wrap, tl, d);
   }
 
-  renderPlacedBlocks();
+  renderAllDays();
+
+  // Sync carousel scroll to currentDate
+  syncCarouselToDate();
+
+  // Listen for scroll to update header
+  carousel.addEventListener('scroll', onCarouselScroll, { passive: true });
+
+  // Scroll all wraps to 8am
+  setTimeout(() => {
+    document.querySelectorAll('.timeline-wrap').forEach(w => {
+      w.scrollTop = (8 - START_HOUR) * 2 * SLOT_H;
+    });
+  }, 100);
+}
+
+function getDayOffset(d) {
+  // d = index 0-6, returns Date
+  const day = new Date(today0);
+  day.setDate(today0.getDate() + d);
+  return day;
+}
+
+function syncCarouselToDate() {
+  const carousel = document.getElementById('days-carousel');
+  const diff = Math.round((currentDate - today0) / (1000*60*60*24));
+  const idx = Math.max(0, Math.min(6, diff));
+  carousel.scrollLeft = idx * carousel.offsetWidth;
+}
+
+let scrollTimer = null;
+function onCarouselScroll() {
+  clearTimeout(scrollTimer);
+  scrollTimer = setTimeout(() => {
+    const carousel = document.getElementById('days-carousel');
+    const idx = Math.round(carousel.scrollLeft / carousel.offsetWidth);
+    currentDate = getDayOffset(Math.max(0, Math.min(6, idx)));
+    updateHeader();
+    updateNavBtns();
+  }, 50);
+}
+
+function renderAllDays() {
+  for (let d = 0; d < 7; d++) {
+    renderDayBlocks(d);
+  }
+}
+
+function setupDayDropZone(wrap, tl, dayIdx) {
+  const ghost = document.getElementById('drag-ghost');
+  // Touch drop handled in setupLibDrag via endDrag
+  wrap._dayIdx = dayIdx;
 }
 
 function slotToY(slot) { return slot * SLOT_H; }
@@ -484,10 +562,19 @@ function slotToTime(slot) {
 }
 
 function renderPlacedBlocks() {
-  const tl = document.getElementById('timeline');
-  document.querySelectorAll('.placed-block, .free-indicator').forEach(el => el.remove());
+  const diff = Math.round((currentDate - today0) / (1000*60*60*24));
+  renderDayBlocks(Math.max(0, Math.min(6, diff)));
+}
 
-  const dayBlocks = getDayBlocks();
+function renderDayBlocks(dayIdx) {
+  const dayDate = getDayOffset(dayIdx);
+  const key = dateKey(dayDate);
+  if (!appData.days[key]) appData.days[key] = [];
+  const tl = document.getElementById('timeline-' + dayIdx);
+  if (!tl) return;
+  tl.querySelectorAll('.placed-block, .free-indicator').forEach(el => el.remove());
+
+  const dayBlocks = appData.days[key];
   dayBlocks.sort((a,b) => a.slot - b.slot);
 
   dayBlocks.forEach((pb, idx) => {
@@ -515,7 +602,7 @@ function renderPlacedBlocks() {
       e.stopPropagation();
       dayBlocks.splice(idx, 1);
       saveData();
-      renderPlacedBlocks();
+      renderDayBlocks(dayIdx);
     };
 
     el.appendChild(title);
@@ -524,18 +611,14 @@ function renderPlacedBlocks() {
     el.appendChild(delBtn);
     tl.appendChild(el);
 
-    setupBlockDrag(el, pb, idx);
-    setupResizeDrag(resizeHandle, pb);
+    setupBlockDrag(el, pb, dayIdx);
+    setupResizeDrag(resizeHandle, pb, dayIdx);
   });
 
-  renderFreeTime();
+  renderFreeTime(tl, dayBlocks, dayIdx);
 }
 
-function renderFreeTime() {
-  const tl = document.getElementById('timeline');
-  document.querySelectorAll('.free-indicator').forEach(el => el.remove());
-
-  const dayBlocks = getDayBlocks();
+function renderFreeTime(tl, dayBlocks, dayIdx) {
   const occupied = new Array(TOTAL_SLOTS).fill(false);
   dayBlocks.forEach(pb => {
     for (let i = pb.slot; i < pb.slot + pb.duration && i < TOTAL_SLOTS; i++) {
@@ -566,13 +649,12 @@ function renderFreeTime() {
 }
 
 // Drag placed block
-function setupBlockDrag(el, pb, idx) {
-  const tlWrap = document.getElementById('timeline-wrap');
+function setupBlockDrag(el, pb, dayIdx) {
   let startY, startSlot, dragging = false;
 
   const onMove = (clientY) => {
     if (!dragging) return;
-    const tlRect = document.getElementById('timeline').getBoundingClientRect();
+    const tlRect = document.getElementById('timeline-' + dayIdx).getBoundingClientRect();
     const relY = clientY - tlRect.top;
     let newSlot = yToSlot(relY - (pb.duration * SLOT_H / 2));
     newSlot = Math.max(0, Math.min(TOTAL_SLOTS - pb.duration, newSlot));
@@ -641,7 +723,7 @@ function setupResizeDrag(handle, pb) {
     const move = ev => { onMove(ev.touches[0].clientY); };
     const end = () => {
       saveData();
-      renderPlacedBlocks();
+      renderDayBlocks(dayIdx);
       document.removeEventListener('touchmove', move);
       document.removeEventListener('touchend', end);
     };
@@ -654,7 +736,7 @@ function setupResizeDrag(handle, pb) {
     const move = ev => { onMove(ev.clientY); };
     const end = () => {
       saveData();
-      renderPlacedBlocks();
+      renderDayBlocks(dayIdx);
       document.removeEventListener('mousemove', move);
       document.removeEventListener('mouseup', end);
     };
@@ -748,17 +830,25 @@ function setupLibDrag(el, blockDef) {
 
   const endDrag = (clientX, clientY) => {
     ghost.style.display = 'none';
-    const tlWrap = document.getElementById('timeline-wrap');
-    const tlRect = document.getElementById('timeline').getBoundingClientRect();
-    if (clientX < tlRect.left || clientX > tlRect.right) return;
-    const relY = clientY - tlRect.top + tlWrap.scrollTop;
+    // Find which day column we dropped on
+    const carousel = document.getElementById('days-carousel');
+    const carouselRect = carousel.getBoundingClientRect();
+    if (clientX < carouselRect.left || clientX > carouselRect.right) return;
+    const dayIdx = Math.round(carousel.scrollLeft / carousel.offsetWidth);
+    const tl = document.getElementById('timeline-' + dayIdx);
+    if (!tl) return;
+    const tlRect = tl.getBoundingClientRect();
+    const wrap = document.getElementById('timeline-wrap-' + dayIdx);
+    const relY = clientY - tlRect.top + wrap.scrollTop;
     let slot = yToSlot(relY);
     slot = Math.max(0, Math.min(TOTAL_SLOTS - blockDef.duration, slot));
-    const dayBlocks = getDayBlocks();
+    const dayDate = getDayOffset(dayIdx);
+    const key = dateKey(dayDate);
+    if (!appData.days[key]) appData.days[key] = [];
     const newBlock = { ...blockDef, slot, id: undefined };
-    dayBlocks.push(newBlock);
+    appData.days[key].push(newBlock);
     saveData();
-    renderPlacedBlocks();
+    renderDayBlocks(dayIdx);
     if (blockDef.isCustomOnce) {
       openRenameModal(newBlock);
     }
@@ -850,62 +940,27 @@ function updateNavBtns() {
 
 // Navigation
 document.getElementById('prev-btn').onclick = () => {
-  currentDate.setDate(currentDate.getDate() - 1);
-  clampDate();
-  updateHeader();
-  updateNavBtns();
-  renderPlacedBlocks();
+  const carousel = document.getElementById('days-carousel');
+  const idx = Math.round(carousel.scrollLeft / carousel.offsetWidth);
+  if (idx > 0) carousel.scrollLeft = (idx - 1) * carousel.offsetWidth;
 };
 document.getElementById('next-btn').onclick = () => {
-  currentDate.setDate(currentDate.getDate() + 1);
-  clampDate();
-  updateHeader();
-  updateNavBtns();
-  renderPlacedBlocks();
+  const carousel = document.getElementById('days-carousel');
+  const idx = Math.round(carousel.scrollLeft / carousel.offsetWidth);
+  if (idx < 6) carousel.scrollLeft = (idx + 1) * carousel.offsetWidth;
 };
 document.getElementById('today-btn').onclick = () => {
   currentDate = new Date(); currentDate.setHours(0,0,0,0);
+  syncCarouselToDate();
   updateHeader();
   updateNavBtns();
-  renderPlacedBlocks();
 };
-
-// Swipe navigation - only trigger if not dragging a block
-let touchStartX = 0;
-let touchStartY = 0;
-let swipeLocked = false;
-const wrap = document.getElementById('timeline-wrap');
-wrap.addEventListener('touchstart', e => {
-  touchStartX = e.touches[0].clientX;
-  touchStartY = e.touches[0].clientY;
-  swipeLocked = false;
-}, { passive: true });
-wrap.addEventListener('touchmove', e => {
-  const dy = Math.abs(e.touches[0].clientY - touchStartY);
-  const dx = Math.abs(e.touches[0].clientX - touchStartX);
-  if (dy > dx) swipeLocked = true;
-}, { passive: true });
-wrap.addEventListener('touchend', e => {
-  if (swipeLocked) return;
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
-  if (Math.abs(dx) > 80 && dy < 40) {
-    if (dx < 0) document.getElementById('next-btn').click();
-    else document.getElementById('prev-btn').click();
-  }
-}, { passive: true });
 
 // Init
 updateHeader();
 updateNavBtns();
 buildTimeline();
 buildSidebar();
-
-// Scroll to 8am
-setTimeout(() => {
-  document.getElementById('timeline-wrap').scrollTop = (8 - START_HOUR) * 2 * SLOT_H;
-}, 100);
 </script>
-
 </body>
 </html>
